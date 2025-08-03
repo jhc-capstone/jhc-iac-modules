@@ -27,8 +27,13 @@ variable "stage_name" {
 variable "routes" {
   description = "List of route objects"
   type = list(object({
-    route_key          = string   # e.g., "GET /ping"
-    integration_uri    = string   # e.g., NLB URI like "http://<nlb-dns-name>"
-    integration_method = string   # e.g., "ANY", "GET"
+    route_key          = string # e.g., "GET /ping"
+    integration_uri    = string # e.g., NLB URI like "http://<nlb-dns-name>"
+    integration_method = string # e.g., "ANY", "GET"
   }))
+}
+variable "lambda_arn" {}
+variable "region" {}
+variable "authorizer_name" {
+  default = "lambda-authorizer"
 }
