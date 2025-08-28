@@ -20,6 +20,12 @@ variable "sub_resource_name" {
   default     = ""
 }
 
+variable "http_method" {
+  type        = string
+  description = "HTTP method for the resource (e.g., GET, POST)"
+  default     = "GET"
+}
+
 variable "vpc_link_id" {
   type        = string
   description = "VPC Link ID for integration"

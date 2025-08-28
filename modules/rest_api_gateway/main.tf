@@ -11,11 +11,11 @@ resource "aws_api_gateway_resource" "this" {
   path_part   = var.resource_name
 }
 
-# Create ANY method for primary resource
+# Create method for primary resource
 resource "aws_api_gateway_method" "this" {
   rest_api_id   = aws_api_gateway_rest_api.this.id
   resource_id   = aws_api_gateway_resource.this.id
-  http_method   = "ANY"
+  http_method   = var.http_method
   authorization = "NONE"
 }
 
@@ -25,7 +25,7 @@ resource "aws_api_gateway_integration" "this" {
   resource_id             = aws_api_gateway_resource.this.id
   http_method             = aws_api_gateway_method.this.http_method
   type                    = "HTTP_PROXY"
-  integration_http_method = "ANY"
+  integration_http_method = var.http_method
   uri                     = var.vpc_link_uri
   connection_type         = "VPC_LINK"
   connection_id           = var.vpc_link_id
@@ -39,12 +39,12 @@ resource "aws_api_gateway_resource" "sub" {
   path_part   = var.sub_resource_name
 }
 
-# ANY method for sub-resource
+# Method for sub-resource
 resource "aws_api_gateway_method" "sub_method" {
   count        = length(var.sub_resource_name) > 0 ? 1 : 0
   rest_api_id   = aws_api_gateway_rest_api.this.id
   resource_id   = aws_api_gateway_resource.sub[0].id
-  http_method   = "ANY"
+  http_method   = var.http_method
   authorization = "NONE"
 }
 
@@ -55,7 +55,7 @@ resource "aws_api_gateway_integration" "sub_integration" {
   resource_id              = aws_api_gateway_resource.sub[0].id
   http_method              = aws_api_gateway_method.sub_method[0].http_method
   type                     = "HTTP_PROXY"
-  integration_http_method  = "ANY"
+  integration_http_method  = var.http_method
   uri                      = var.vpc_link_uri
   connection_type          = "VPC_LINK"
   connection_id            = var.vpc_link_id
