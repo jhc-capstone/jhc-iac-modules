@@ -1,21 +1,31 @@
 variable "api_name" {
-  description = "Name of the API Gateway REST API"
   type        = string
+  description = "Name of the API Gateway REST API"
 }
 
 variable "api_description" {
-  description = "Description for the API Gateway"
   type        = string
+  description = "Description of the API"
   default     = ""
 }
 
-variable "api_resources" {
-  description = "List of resource paths for the API (e.g., orders, products)"
-  type        = list(string)
+variable "resource_name" {
+  type        = string
+  description = "Primary resource path (e.g., 'DocContent')"
 }
 
-variable "http_method" {
-  description = "HTTP method for the resource (GET, POST, etc.)"
+variable "sub_resource_name" {
   type        = string
-  default     = "GET"
+  description = "Optional sub-resource path (child of resource_name)"
+  default     = ""
+}
+
+variable "vpc_link_id" {
+  type        = string
+  description = "VPC Link ID for integration"
+}
+
+variable "vpc_link_uri" {
+  type        = string
+  description = "HTTP endpoint URI to integrate with VPC Link"
 }
